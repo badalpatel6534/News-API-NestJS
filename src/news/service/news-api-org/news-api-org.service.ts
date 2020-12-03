@@ -7,12 +7,11 @@ export class NewsApiOrgService {
     /**
      * 
      * @param category : ex: 'business', ''
-     * @param language : ex: 'en',
      * @param country : ex: 'in', 'us', 'au' etc
      */
-    async getTopHeadlinesNews(category: string, language: string, country: string) {
+    async getTopHeadlinesNews(category: string, country: string) {
         try {
-            return  await newsapi.v2.topHeadlines({category,language,country}); 
+            return  await newsapi.v2.topHeadlines({category,country}); 
         } catch (err) {
             console.error('err.......', err);
             throw new InternalServerErrorException(err);

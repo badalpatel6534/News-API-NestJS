@@ -1,12 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { NewsApiOrgService } from 'src/news/service/news-api-org/news-api-org.service';
+import { Request } from 'express';
+
+export interface newsAPI  {
+    category: string;
+    country: string;
+}
 
 @Controller('news-api-org')
 export class NewsApiOrgController {
     constructor(private newsApiOrgService: NewsApiOrgService) {}
 
-    @Get('getTopHeadlinesNews')
-    async getTopHeadlinesNews() {
-        return await this.newsApiOrgService.getTopHeadlinesNews('business', 'en', 'in');
+    @Get('topHeadlinesNews')
+    async getTopHeadlinesNews(@Req() request: Request) {
+        const queryData = request.query as newsAPI;
+        return await this.newsApiOrgService.getTopHeadlinesNews(queryData.category, queryData.country);
     }
 }
